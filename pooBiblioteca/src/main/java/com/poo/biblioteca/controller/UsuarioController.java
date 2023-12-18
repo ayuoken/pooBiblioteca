@@ -64,4 +64,9 @@ public class UsuarioController {
         return UsuarioMapper.INSTANCE.entidadeParaDto(usuarioCriado);
     }
 
+    @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deletarUsuario(@PathVariable Long id) {
+        usuarioService.deleteById(id);
+    }
+
 }
