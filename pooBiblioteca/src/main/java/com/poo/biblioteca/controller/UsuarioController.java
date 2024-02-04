@@ -24,6 +24,12 @@ public class UsuarioController {
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
+    
+    @RequestMapping("/")
+	public String helloWorld() {
+		return "Hello World";
+	}
+	
 
     @GetMapping(path = "/paginado", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
