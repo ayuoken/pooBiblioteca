@@ -24,7 +24,7 @@ public class LivroController {
 
     private final LivroService livroService;
 
-    public LivroController(LivroService livroService){
+    public LivroController(LivroService livroService) {
         this.livroService = livroService;
     }
 
@@ -32,8 +32,7 @@ public class LivroController {
     @ResponseStatus(HttpStatus.OK)
     public Page<LivroDto> buscarLivros(
             LivroDto filter,
-            @PageableDefault
-            @SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+            @PageableDefault @SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Livro> pageLivro = this.livroService.findAll(LivroMapper.INSTANCE.dtoParaEntidade(filter), pageable);
 
         Page<LivroDto> pageLivroDto = pageLivro.map(LivroMapper.INSTANCE::entidadeParaDto);
@@ -42,19 +41,33 @@ public class LivroController {
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LivroDto buscarLivroPorId(@PathVariable Long id){
-        var livro = livroService.findById(id).orElseThrow(() -> new EntityNotFoundException("Livro: "+ id));
+    public LivroDto buscarLivroPorId(@PathVariable Long id) {
+        var livro = livroService.findById(id).orElseThrow(() -> new EntityNotFoundException("Livro: " + id));
         return LivroMapper.INSTANCE.entidadeParaDto(livro);
     }
 
     @GetMapping(path = "/isbn/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LivroDto buscarLivroPorIsbn(@PathVariable String isbn){
-        var livro = livroService.findByIsbn(isbn).orElseThrow(() -> new EntityNotFoundException("Livro: "+isbn));
+    public LivroDto buscarLivroPorIsbn(@PathVariable String isbn) {
+        System.out.println("foi");
+        var livro = livroService.findByIsbn(isbn).orElseThrow(() -> new EntityNotFoundException("Livro: " + isbn));
         return LivroMapper.INSTANCE.entidadeParaDto(livro);
     }
 
+    @GetMapping(path = "/nomeLivro/{nomeLivro}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public LivroDto buscarLivroPorNome(@PathVariable String nomeLivro) {
+        try {
+            var livro = livroService.findByNomeLivro(nomeLivro)
+                    .orElseThrow(() -> new EntityNotFoundException("Livro: " + nomeLivro));
+            return LivroMapper.INSTANCE.entidadeParaDto(livro);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+
+    }
+
     @PostMapping(path = "/salvarLivro")
-    public LivroDto salvarLivro(@RequestBody LivroDto livroDto){
+    public LivroDto salvarLivro(@RequestBody LivroDto livroDto) {
         Livro livro = LivroMapper.INSTANCE.dtoParaEntidade(livroDto);
 
         Livro livroCriado = livroService.criarLivro(livro);
@@ -63,14 +76,14 @@ public class LivroController {
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public LivroDto alterarLivro(@RequestBody @Valid LivroDto livroDto){
+    public LivroDto alterarLivro(@RequestBody @Valid LivroDto livroDto) {
         Livro livro = LivroMapper.INSTANCE.dtoParaEntidade(livroDto);
         Livro livroCriado = livroService.saveUpdate(livro);
         return LivroMapper.INSTANCE.entidadeParaDto(livroCriado);
     }
 
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deletarLivro(@PathVariable Long id){
+    public void deletarLivro(@PathVariable Long id) {
         livroService.deleteById(id);
     }
 

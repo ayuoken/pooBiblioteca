@@ -13,7 +13,7 @@ public class LivroDto {
     private Long id;
 
     @NotNull(message = "Nome Obrigatório!")
-    private String nome;
+    private String nomeLivro;
 
     @NotNull(message = "ISBN Obrigatório!")
     private String isbn;

@@ -11,12 +11,12 @@ public interface LivroMapper {
     LivroMapper INSTANCE = Mappers.getMapper(LivroMapper.class);
 
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "nome", target = "nomeLivro")
+    @Mapping(source = "nomeLivro", target = "nomeLivro")
     @Mapping(source = "isbn", target = "isbn")
     Livro dtoParaEntidade(LivroDto livroDto);
 
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "nomeLivro", target = "nome")
+    @Mapping(source = "nomeLivro", target = "nomeLivro")
     @Mapping(source = "isbn", target = "isbn")
     LivroDto entidadeParaDto(Livro livro);
 }
