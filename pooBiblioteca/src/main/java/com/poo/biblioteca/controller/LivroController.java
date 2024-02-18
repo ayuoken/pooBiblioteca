@@ -40,7 +40,7 @@ public class LivroController {
         return pageLivroDto;
     }
 
-    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public LivroDto buscarLivroPorId(@PathVariable Long id) {
         var livro = livroService.findById(id).orElseThrow(() -> new EntityNotFoundException("Livro: " + id));
         return LivroMapper.INSTANCE.entidadeParaDto(livro);

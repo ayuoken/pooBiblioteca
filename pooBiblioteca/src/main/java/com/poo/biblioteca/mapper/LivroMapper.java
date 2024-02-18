@@ -13,10 +13,22 @@ public interface LivroMapper {
     @Mapping(source = "id", target = "id")
     @Mapping(source = "nomeLivro", target = "nomeLivro")
     @Mapping(source = "isbn", target = "isbn")
+    @Mapping(source = "categoria", target = "categoria")
+    @Mapping(source = "genero", target = "genero")
+    @Mapping(source = "anoLancamento", target = "anoLancamento")
+    @Mapping(source = "edicao", target = "edicao")
+    @Mapping(source = "quantidade", target = "quantidade")
+    @Mapping(source = "autores", target = "autores")
     Livro dtoParaEntidade(LivroDto livroDto);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "nomeLivro", target = "nomeLivro")
     @Mapping(source = "isbn", target = "isbn")
+    @Mapping(source = "categoria", target = "categoria")
+    @Mapping(source = "genero", target = "genero")
+    @Mapping(source = "anoLancamento", target = "anoLancamento")
+    @Mapping(source = "edicao", target = "edicao")
+    @Mapping(source = "quantidade", target = "quantidade")
+    @Mapping(source = "autores", target = "autores")
     LivroDto entidadeParaDto(Livro livro);
 }
