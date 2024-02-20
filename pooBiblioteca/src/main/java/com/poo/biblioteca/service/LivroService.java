@@ -42,6 +42,8 @@ public class LivroService {
     public Optional<Livro> findByIsbn(String isbn) { return livroRepository.findByIsbn(isbn);}
 
     public Optional<Livro> findById(Long id) { return livroRepository.findById(id);}
+    
+    public Optional<Livro> findByNomeLivro(String nomeLivro) {return livroRepository.findByNomeLivro(nomeLivro);}
 
     @Transactional(rollbackFor = Throwable.class)
     public Livro saveUpdate(Livro livro){
