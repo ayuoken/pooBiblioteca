@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
 
+@CrossOrigin(origins = "http://127.0.0.1:5173/")
 @RestController
 @RequestMapping(path = "/livro")
 public class LivroController {
@@ -75,7 +76,7 @@ public class LivroController {
         return LivroMapper.INSTANCE.entidadeParaDto(livroCriado);
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public LivroDto alterarLivro(@RequestBody @Valid LivroDto livroDto) {
         Livro livro = LivroMapper.INSTANCE.dtoParaEntidade(livroDto);
         Livro livroCriado = livroService.saveUpdate(livro);

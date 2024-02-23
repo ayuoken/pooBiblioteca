@@ -49,7 +49,7 @@ public class LivroService {
     public Livro saveUpdate(Livro livro){
         if(!livroRepository.existsById(livro.getId())){
             throw new EntityNotFoundException("Livro: " + livro.getId());
-        }
+        }       
         return criarLivro(livro);
     }
 }
