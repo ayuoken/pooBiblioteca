@@ -17,7 +17,8 @@ public class ReservaLivro {
 	    @ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name = "MULTA_ID")
 	    private Multa multa;
-
+	    
+	    @ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name = "ID_LIVRO")
 	    private Livro livroReservado;
 

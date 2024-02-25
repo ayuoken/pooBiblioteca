@@ -43,8 +43,23 @@ public class Livro {
 
     @Column(name="AUTORES_LIVRO", nullable = false)
     private List<String> autores;
+    
+    
 
-    public Long getId() {
+    public Livro(String nomeLivro, String isbn, String categoria, String genero, String anoLancamento,
+			String edicao, String quantidade, List<String> autores) {
+		//this.id = id;
+		this.nomeLivro = nomeLivro;
+		this.isbn = isbn;
+		this.categoria = categoria;
+		this.genero = genero;
+		this.anoLancamento = anoLancamento;
+		this.edicao = edicao;
+		this.quantidade = quantidade;
+		this.autores = autores;
+	}
+
+	public Long getId() {
         return id;
     }
 
