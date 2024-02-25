@@ -10,6 +10,24 @@ public class Usuario {
     @Column(name = "ID_USUARIO",nullable = false)
     private Long id;
 
+	@Column(name = "NOME",nullable = false)
+    private String nome;
+
+    @Column(name = "ENDERECO",nullable = false)
+    private String endereco;
+
+    @Column(name = "NUMERO_PARA_CONTATO",nullable = false)
+    private String numeroContato;
+
+    @Column(name = "EMAIL",nullable = false)
+    private String email;
+
+    @Column(name = "LOGIN",nullable = false)
+    private String login;
+
+    @Column(name = "SENHA",nullable = false)
+    private String senha;
+    
     public Long getId() {
 		return id;
 	}
@@ -66,22 +84,5 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	@Column(name = "NOME",nullable = false)
-    private String nome;
-
-    @Column(name = "ENDERECO",nullable = false)
-    private String endereco;
-
-    @Column(name = "NUMERO_PARA_CONTATO",nullable = false)
-    private String numeroContato;
-
-    @Column(name = "EMAIL",nullable = false)
-    private String email;
-
-    @Column(name = "LOGIN",nullable = false)
-    private String login;
-
-    @Column(name = "SENHA",nullable = false)
-    private String senha;
 
 }

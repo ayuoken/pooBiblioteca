@@ -34,10 +34,10 @@ public interface ReservaLivroMapper {
     @Mapping(source = "autores", target = "autores")
     LivroDto entidadeParaDto(Livro livro);
 
-    @Mapping(source = "livroReservado", target = "livro")
+    @Mapping(source = "livroReservado", target = "livroReservado")
     ReservaLivro dtoParaEntidade(ReservaLivroDto reservaLivroDto);
     
-    @Mapping(source = "livro", target = "livroReservado")
+    @Mapping(source = "livroReservado", target = "livroReservado")
     ReservaLivroDto entidadeParaDto(ReservaLivro reservaLivro);
 }
 

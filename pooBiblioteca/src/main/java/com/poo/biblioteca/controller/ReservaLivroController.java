@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reserva-livro")
 public class ReservaLivroController {
 
-    private final ReservaLivroService reservaLivroService;
+	@Autowired
+    private ReservaLivroService reservaLivroService;
 
-    @Autowired
-    public ReservaLivroController(ReservaLivroService reservaLivroService) {
-        this.reservaLivroService = reservaLivroService;
-    }
+   
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> reservarLivro(@RequestBody ReservaLivro reservaLivro) {
