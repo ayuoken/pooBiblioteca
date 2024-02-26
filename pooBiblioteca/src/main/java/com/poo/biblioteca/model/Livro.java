@@ -44,7 +44,9 @@ public class Livro {
     @Column(name="AUTORES_LIVRO", nullable = false)
     private List<String> autores;
     
-    
+    public Livro() {
+    	
+    }
 
     public Livro(String nomeLivro, String isbn, String categoria, String genero, String anoLancamento,
 			String edicao, String quantidade, List<String> autores) {
