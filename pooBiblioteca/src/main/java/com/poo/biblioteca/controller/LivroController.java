@@ -3,6 +3,7 @@ package com.poo.biblioteca.controller;
 import com.poo.biblioteca.service.LivroService;
 import com.poo.biblioteca.dto.LivroDto;
 import com.poo.biblioteca.dto.UsuarioDto;
+import com.poo.biblioteca.exception.livro.LivroNaoEncontradoException;
 import com.poo.biblioteca.facade.Admin;
 import com.poo.biblioteca.facade.Biblioteca;
 import com.poo.biblioteca.mapper.LivroMapper;
@@ -18,6 +19,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
@@ -27,11 +29,10 @@ import java.awt.*;
 @RequestMapping(path = "/livro")
 public class LivroController {
 
-	@Autowired
+    @Autowired
     private Admin fachadaAdmin;
-	@Autowired
+    @Autowired
     private Biblioteca fachadaBiblioteca;
-	
 
     @GetMapping(path = "/livrosPaginados", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -46,27 +47,41 @@ public class LivroController {
     }
 
     @GetMapping(path = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LivroDto buscarLivroPorId(@PathVariable Long id) {
-        var livro = this.fachadaBiblioteca.findById(id).orElseThrow(() -> new EntityNotFoundException("Livro: " + id));
-        return LivroMapper.INSTANCE.entidadeParaDto(livro);
+    public ResponseEntity<?> buscarLivroPorId(@PathVariable Long id) throws LivroNaoEncontradoException {
+
+        try {
+            var livro = this.fachadaBiblioteca.findById(id)
+                    .orElseThrow(() -> new LivroNaoEncontradoException("Livro não encontrado"));
+            LivroMapper.INSTANCE.entidadeParaDto(livro);
+            return ResponseEntity.ok(livro);
+        } catch (LivroNaoEncontradoException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @GetMapping(path = "/isbn/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LivroDto buscarLivroPorIsbn(@PathVariable String isbn) {
-        System.out.println("foi");
-        var livro = this.fachadaBiblioteca.findByIsbn(isbn).orElseThrow(() -> new EntityNotFoundException("Livro: " + isbn));
-        return LivroMapper.INSTANCE.entidadeParaDto(livro);
+    public ResponseEntity<?> buscarLivroPorIsbn(@PathVariable String isbn) throws LivroNaoEncontradoException {
+
+        try {
+            var livro = this.fachadaBiblioteca.findByIsbn(isbn)
+                    .orElseThrow(() -> new LivroNaoEncontradoException("Livro não encontrado"));
+            LivroMapper.INSTANCE.entidadeParaDto(livro);
+            return ResponseEntity.ok(livro);
+        } catch (LivroNaoEncontradoException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping(path = "/nomeLivro/{nomeLivro}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LivroDto buscarLivroPorNome(@PathVariable String nomeLivro) {
+    public ResponseEntity<?> buscarLivroPorNome(@PathVariable String nomeLivro) throws LivroNaoEncontradoException {
         try {
             var livro = this.fachadaBiblioteca.findByNomeLivro(nomeLivro)
-                    .orElseThrow(() -> new EntityNotFoundException("Livro: " + nomeLivro));
-            return LivroMapper.INSTANCE.entidadeParaDto(livro);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw e;
+                    .orElseThrow(() -> new LivroNaoEncontradoException("teste"));
+                    LivroMapper.INSTANCE.entidadeParaDto(livro);
+                    return ResponseEntity.ok(livro);
+        } catch (LivroNaoEncontradoException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
     }
@@ -80,7 +95,7 @@ public class LivroController {
         return LivroMapper.INSTANCE.entidadeParaDto(livroCriado);
     }
 
-    @PutMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public LivroDto alterarLivro(@RequestBody @Valid LivroDto livroDto) {
         Livro livro = LivroMapper.INSTANCE.dtoParaEntidade(livroDto);
         Livro livroCriado = this.fachadaAdmin.saveUpdate(livro);
@@ -89,7 +104,7 @@ public class LivroController {
 
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deletarLivro(@PathVariable Long id) {
-    	this.fachadaAdmin.deleteById(id);
+        this.fachadaAdmin.deleteById(id);
     }
 
 }
