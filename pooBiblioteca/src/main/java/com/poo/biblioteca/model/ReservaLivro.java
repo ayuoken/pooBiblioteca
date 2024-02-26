@@ -18,6 +18,7 @@ public class ReservaLivro {
 	    @JoinColumn(name = "MULTA_ID")
 	    private Multa multa;
 	    
+	    
 	    @ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name = "ID_LIVRO")
 	    private Livro livroReservado;
@@ -31,6 +32,11 @@ public class ReservaLivro {
 	    @ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name = "ID_USUARIO")
 	    private Usuario usuario;
+	    
+
+	    
+	public ReservaLivro() {
+	    }
 
     public ReservaLivro(Long id, Livro livroReservado, LocalDate dataReservada, LocalDate dataDevolucao, Usuario usuario) {
         this.id = id;

@@ -20,6 +20,19 @@ public class Multa {
 
     @OneToOne(mappedBy = "multa")
     private ReservaLivro reserva;
+    
+    @Column(name = "PAGO")
+    private boolean pago;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
+    private StatusMulta status;
+    
+    public enum StatusMulta {
+        PENDENTE,
+        PAGA,
+        CANCELADA
+    }
 
     public Multa() {
     }
@@ -54,6 +67,20 @@ public class Multa {
 
     public void setReserva(ReservaLivro reserva) {
         this.reserva = reserva;
+    }
+    public boolean isPago() {
+        return pago;
+    }
+    public void setPago(boolean pago) {
+        this.pago = pago;
+    }
+
+    public StatusMulta getStatus() {
+    	return status;
+}
+
+    public void setStatus(StatusMulta status) {
+    	this.status = status;
     }
 }
 
