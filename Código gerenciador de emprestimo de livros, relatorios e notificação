@@ -1,0 +1,91 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Livro {
+    String titulo;
+    boolean emprestado;
+
+    Livro(String titulo) {
+        this.titulo = titulo;
+        this.emprestado = false;
+    }
+}
+
+class Usuario {
+    String nome;
+    List<Livro> livrosEmprestados;
+
+    Usuario(String nome) {
+        this.nome = nome;
+        this.livrosEmprestados = new ArrayList<>();
+    }
+}
+
+class Emprestimo {
+    Usuario usuario;
+    Livro livro;
+
+    Emprestimo(Usuario usuario, Livro livro) {
+        this.usuario = usuario;
+        this.livro = livro;
+    }
+}
+
+class Relatorio {
+    // Lógica para geração de relatórios
+}
+
+class Notificacao {
+    // Lógica para disparo de notificações
+}
+
+class Administrador {
+    boolean temPermissaoAprovarEmprestimo;
+    boolean temPermissaoGerarRelatorio;
+    boolean temPermissaoDispararNotificacao;
+
+    Administrador() {
+        this.temPermissaoAprovarEmprestimo = true;
+        this.temPermissaoGerarRelatorio = true;
+        this.temPermissaoDispararNotificacao = true;
+    }
+
+    void aprovarEmprestimo(Emprestimo emprestimo) {
+        if (!temPermissaoAprovarEmprestimo) {
+            throw new SecurityException("Você não tem permissão para aprovar empréstimos.");
+        }
+        // Lógica para aprovar empréstimo
+        System.out.println("Empréstimo aprovado com sucesso!");
+    }
+
+    void gerarRelatorio() {
+        if (!temPermissaoGerarRelatorio) {
+            throw new SecurityException("Você não tem permissão para gerar relatórios.");
+        }
+        // Lógica para gerar relatório
+        System.out.println("Relatório gerado com sucesso!");
+    }
+
+    void dispararNotificacao() {
+        if (!temPermissaoDispararNotificacao) {
+            throw new SecurityException("Você não tem permissão para disparar notificações.");
+        }
+        // Lógica para disparar notificações
+        System.out.println("Notificações disparadas com sucesso!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Livro livro = new Livro("Java Programming");
+        Usuario usuario = new Usuario("John Doe");
+        Emprestimo emprestimo = new Emprestimo(usuario, livro);
+
+        Administrador administrador = new Administrador();
+        administrador.aprovarEmprestimo(emprestimo);
+
+        administrador.gerarRelatorio();
+
+        administrador.dispararNotificacao();
+    }
+}
