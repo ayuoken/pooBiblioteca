@@ -1,0 +1,95 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Livro {
+    String titulo;
+    boolean devolvido;
+    boolean atrasado;
+
+    Livro(String titulo) {
+        this.titulo = titulo;
+        this.devolvido = false;
+        this.atrasado = false;
+    }
+}
+
+class Usuario {
+    String nome;
+    List<Livro> livrosEmprestados;
+
+    Usuario(String nome) {
+        this.nome = nome;
+        this.livrosEmprestados = new ArrayList<>();
+    }
+}
+
+class Multa {
+    Usuario usuario;
+    double valor;
+
+    Multa(Usuario usuario, double valor) {
+        this.usuario = usuario;
+        this.valor = valor;
+    }
+}
+
+class Biblioteca {
+    List<Livro> livrosDisponiveis;
+    List<Multa> multas;
+
+    Biblioteca() {
+        this.livrosDisponiveis = new ArrayList<>();
+        this.multas = new ArrayList<>();
+    }
+
+    void gerarMultas() {
+        for (Livro livro : livrosDisponiveis) {
+            if (livro.devolvido && livro.atrasado) {
+                double multa = 1.50; // Valor da multa diária
+                // Lógica para calcular a multa com base na diferença de datas
+                multas.add(new Multa(new Usuario("Usuário Teste"), multa));
+                livro.atrasado = false; // Evita gerar a mesma multa várias vezes
+            }
+        }
+    }
+
+    void exibirMultas(Usuario usuario) {
+        boolean hasMultas = false;
+        for (Multa multa : multas) {
+            if (multa.usuario.equals(usuario)) {
+                System.out.println("Multa: " + multa.valor);
+                hasMultas = true;
+            }
+        }
+
+        if (!hasMultas) {
+            System.out.println("Não há multas associadas à sua conta.");
+        }
+    }
+
+    void gerenciarMultas() {
+        try {
+            // Lógica para gerenciar as multas
+            System.out.println("Multas gerenciadas com sucesso.");
+        } catch (Exception e) {
+            System.out.println("Erro inesperado. Tente novamente mais tarde.");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Biblioteca biblioteca = new Biblioteca();
+        Usuario usuario = new Usuario("John Doe");
+        biblioteca.livrosDisponiveis.add(new Livro("Java Programming"));
+        
+        // Simulação de devolução atrasada para gerar multa
+        Livro livroDevolvidoAtrasado = biblioteca.livrosDisponiveis.get(0);
+        livroDevolvidoAtrasado.devolvido = true;
+        livroDevolvidoAtrasado.atrasado = true;
+
+        biblioteca.gerarMultas();
+        biblioteca.exibirMultas(usuario);
+        biblioteca.gerenciarMultas();
+    }
+}
