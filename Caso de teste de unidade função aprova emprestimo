@@ -1,0 +1,78 @@
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class BibliotecaTest {
+
+    @Test
+    public void testAprovarEmprestimo() {
+        Administrador administrador = new Administrador();
+        Livro livro = new Livro("Java Programming");
+        Usuario usuario = new Usuario("John Doe");
+        Emprestimo emprestimo = new Emprestimo(usuario, livro);
+
+        try {
+            administrador.aprovarEmprestimo(emprestimo);
+            // Verifica se não lançou exceção, indicando que a aprovação foi bem-sucedida
+            assertTrue(true);
+        } catch (SecurityException e) {
+            // Se ocorrer exceção, falha no teste
+            fail("Não deveria ter lançado exceção");
+        }
+    }
+
+    @Test
+    public void testGerarRelatorio() {
+        Administrador administrador = new Administrador();
+
+        try {
+            administrador.gerarRelatorio();
+            // Verifica se não lançou exceção, indicando que a geração de relatório foi bem-sucedida
+            assertTrue(true);
+        } catch (SecurityException e) {
+            // Se ocorrer exceção, falha no teste
+            fail("Não deveria ter lançado exceção");
+        }
+    }
+
+    @Test
+    public void testDispararNotificacao() {
+        Administrador administrador = new Administrador();
+
+        try {
+            administrador.dispararNotificacao();
+            // Verifica se não lançou exceção, indicando que o disparo de notificação foi bem-sucedido
+            assertTrue(true);
+        } catch (SecurityException e) {
+            // Se ocorrer exceção, falha no teste
+            fail("Não deveria ter lançado exceção");
+        }
+    }
+
+    @Test(expected = SecurityException.class)
+    public void testAprovarEmprestimoSemPermissao() {
+        Administrador administrador = new Administrador();
+        administrador.temPermissaoAprovarEmprestimo = false;
+
+        Livro livro = new Livro("Java Programming");
+        Usuario usuario = new Usuario("John Doe");
+        Emprestimo emprestimo = new Emprestimo(usuario, livro);
+
+        administrador.aprovarEmprestimo(emprestimo);
+    }
+
+    @Test(expected = SecurityException.class)
+    public void testGerarRelatorioSemPermissao() {
+        Administrador administrador = new Administrador();
+        administrador.temPermissaoGerarRelatorio = false;
+
+        administrador.gerarRelatorio();
+    }
+
+    @Test(expected = SecurityException.class)
+    public void testDispararNotificacaoSemPermissao() {
+        Administrador administrador = new Administrador();
+        administrador.temPermissaoDispararNotificacao = false;
+
+        administrador.dispararNotificacao();
+    }
+}
