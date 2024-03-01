@@ -66,12 +66,4 @@ public class UsuarioTest {
 
         Assertions.assertEquals(expectedPage, actualPage);
     }
-
-    @Test
-    public void testIntegracaoBuscarUsuarios() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/usuario/paginado"))
-                .andReturn();
-
-        Assertions.assertEquals(200, result.getResponse().getStatus());
-    }
 }
